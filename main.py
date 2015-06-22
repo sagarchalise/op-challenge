@@ -268,6 +268,8 @@ class MessageHandler(BaseHandler):
 class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler, BaseHandler):    
     @user_required
     def post(self):
+        import pdb
+        pdb.set_trace()
         try:
             upload = self.get_uploads('file')
             u = self.get_user()
