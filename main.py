@@ -1,11 +1,14 @@
+from __future__ import with_statement
 import os
 import cgi
 import time
 import webapp2
 
+# import cloudstorage as gcs
 from google.appengine.ext import ndb
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api import images
 from webapp2_extras.appengine.auth import models
 from webapp2_extras import auth
 from webapp2_extras import json
@@ -23,6 +26,26 @@ def restful(key='bad'):
         'temp': {'status': 503, 'message': "TEMPORARY SERVER ERROR"}, 
         'server': {'status': 500, 'message': "INTERNAL SERVER ERROR"} 
     }.get(key)
+
+# def CreateFile(filename):
+  # """Create a GCS file with GCS client lib.
+
+  # Args:
+    # filename: GCS filename.
+
+  # Returns:
+    # The corresponding string blobkey for this GCS file.
+  # """
+  # Create a GCS file with GCS client.
+  # with gcs.open(filename, 'w') as f:
+    # f.write('abcde\n')
+
+  # Blobstore API requires extra /gs to distinguish against blobstore files.
+  # blobstore_filename = '/gs' + filename
+  # This blob_key works with blobstore APIs that do not expect a
+  # corresponding BlobInfo in datastore.
+  # return blobstore.create_gs_key(blobstore_filename)
+
 
 def user_required(handler):
     """
@@ -44,7 +67,7 @@ def user_required(handler):
 class User(models.User):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-    blob_key = ndb.BlobKeyProperty()
+    blob_key = ndb.BlobProperty()
     
     def set_password(self, raw_password):
         """Sets the password for the current user
@@ -261,15 +284,9 @@ class MessageHandler(BaseHandler):
         self.jsonify(**resp)
             
 
-# class  PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
-    # def post(self):
-        # import pdb
-        # pdb.set_trace()
 class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler, BaseHandler):    
     @user_required
     def post(self):
-        import pdb
-        pdb.set_trace()
         try:
             upload = self.get_uploads('file')
             u = self.get_user()

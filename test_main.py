@@ -7,7 +7,7 @@ from webtest.forms import Upload
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from google.appengine.ext import testbed
-from hello import User, application, Message
+from main import User, application, Message
 
 
 class DatstoreTestCase(unittest.TestCase):
