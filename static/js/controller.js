@@ -80,6 +80,8 @@ gaeApp.controller('divActionController', function($rootScope, $scope, $http){
     $rootScope.userPic = userPic;
     $scope.messages = {};
     $scope.users = {};
+    $scope.userCount = 0;
+    $scope.messageCount = 0;
     if($rootScope.authenticated){
         $http({
             method  : 'GET',
@@ -87,6 +89,7 @@ gaeApp.controller('divActionController', function($rootScope, $scope, $http){
         }).success(function(data){
             console.log(data);
             $scope.users = data.data;
+            $scope.userCount = data.data.length;
         });
     $http({
             method  : 'GET',
@@ -94,6 +97,7 @@ gaeApp.controller('divActionController', function($rootScope, $scope, $http){
         }).success(function(data){
             console.log(data);
             $scope.messages = data.data;
+            $scope.messageCount = data.data.length;
         });
     }
     $scope.messageForm = false;

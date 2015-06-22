@@ -299,15 +299,15 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler, BaseHandler)
             resp.update(error='Issue with upload.')
         self.jsonify(**resp)
 
-class ViewPhotoHandler(BaseHandler, blobstore_handlers.BlobstoreDownloadHandler):
-    @user_required
-    def get(self, photo_key):
-        if not blobstore.get(photo_key):
-            resp = restful('notfound').copy()
-            resp.update(error="Picture not found.")
-            self.jsonify(**resp)
-        else:
-            self.send_blob(photo_key)    
+# class ViewPhotoHandler(BaseHandler, blobstore_handlers.BlobstoreDownloadHandler):
+    # @user_required
+    # def get(self, photo_key):
+        # if not blobstore.get(photo_key):
+            # resp = restful('notfound').copy()
+            # resp.update(error="Picture not found.")
+            # self.jsonify(**resp)
+        # else:
+            # self.send_blob(photo_key)    
     
 
 config = {
@@ -329,5 +329,5 @@ application = webapp2.WSGIApplication([
     webapp2.Route('/messages', MessageHandler, name='message_list'),
     webapp2.Route('/messages/<message_key:\w+>', MessageHandler, name='message_detail'),
     webapp2.Route('/upload_photo', PhotoUploadHandler),
-    webapp2.Route('/view_photo/([^/]+)?', ViewPhotoHandler),
+    # webapp2.Route('/view_photo/([^/]+)?', ViewPhotoHandler),
 ], debug=True, config=config)

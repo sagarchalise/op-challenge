@@ -95,6 +95,7 @@
   
   <div class="col-md-6">
 <div ng-show="!messageForm" class="table-responsive">
+    <div ng-show="userCount">
                 <h4>Users</h4>
 <table class="table">
     <thead>
@@ -110,10 +111,15 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td><button class="btn  btn-link" ng-click="showMessageForm(user.email)"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></button></td>
+
         </tr>
     </tbody>
 </table>
 </div>
+<div ng-show="!userCount">
+<h3>No user has registered.</h3>
+</div>
+    </div>
 <div ng-show="messageForm">
     <h3>Send Message</h3>
 <form ng-submit="sendMessage()">
@@ -137,6 +143,7 @@
 </div>
 <div class="col-md-6">
 <div ng-show="!viewMessage" class="table-responsive">
+    <div ng-show="messageCount">
     <h4>Messages</h4>
 <table class="table">
     <thead>
@@ -155,6 +162,10 @@
     </tbody>
 
 </table>
+    </div>
+    <div ng-show="!messageCount">
+        <h3>No messages.</h3>
+    </div>
 </div>
 <div class="table-responsive" ng-show="viewMessage">
     <button class="btn btn-link" ng-click="closeMessage()">close</button>
