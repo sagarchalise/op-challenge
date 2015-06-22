@@ -292,7 +292,8 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler, BaseHandler)
             u = self.get_user()
             u.blob_key = upload.key()
             u.put()
-            resp = {'data': '/view_photo/{}'.format(upload.key())}
+            url = images.Image.get_serving_url(u.blob_key)
+            resp = {'data': url}
         except:
             resp = restful('server').copy()
             resp.update(error='Issue with upload.')
